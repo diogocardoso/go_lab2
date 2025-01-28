@@ -11,7 +11,7 @@ Desenvolver um sistema em Go que receba um CEP, identifica a cidade e retorna o 
 
 ## 2. Configure o .env
 
-## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
+## 3. Coloque sua api-key como valor na variável WEATHERMAP_API_KEY no .env
 
 ## 4. Baixe compose, se estiver up
 docker-compose down

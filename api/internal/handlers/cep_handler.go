@@ -68,7 +68,7 @@ func (h *CEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	getCEP := usecase.NewGetCEPUseCase(h.CEPRepository)
 	Output, err := getCEP.Execute(get_cep_dto.CEP)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error getting cep: %v", err), http.StatusInternalServerError)
+		http.Error(w, "can not find zipcode", http.StatusNotFound)
 		return
 	}
 
@@ -77,7 +77,7 @@ func (h *CEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 
 	// Codifica o mapa em JSON e escreve na resposta
 	if err := json.NewEncoder(w).Encode(Output); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "can not find zipcode", http.StatusNotFound)
 	}
 
 	log.Printf("|---> Success: %v | C: %v | K: %v | F:%v", Output.City, Output.Celcius, Output.Kelvin, Output.Fahrenheit)

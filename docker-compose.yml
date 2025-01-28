@@ -5,9 +5,10 @@ services:
   #   ports:
   #     - 16686:16686
   zipkin:
-      image: openzipkin/zipkin
-      ports:
-        - "9411:9411" # Porta padrão do Zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411" # Porta padrão do Zipkin
+
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
@@ -28,5 +29,18 @@ services:
       - "8889:8889" # Prometheus exporter metrics
       - "4317:4317" # OTLP gRPC receiver
     depends_on:
-        - zipkin
-        # - jaeger
+      - zipkin
+      # - jaeger
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # API Cep Validate
+      - "8081:8081"  # API Orchestrator
+    environment:
+      - ENV=development    
+    volumes:
+      - .:/app
+    command: ["./CEPrun"]  # Comando para executar a API

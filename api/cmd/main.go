@@ -11,6 +11,7 @@ import (
 	"github.com.diogocardoso/go/lab-2/api/internal/infra"
 	"github.com.diogocardoso/go/lab-2/collector"
 	"github.com.diogocardoso/go/lab-2/configs"
+	orchestrator "github.com.diogocardoso/go/lab-2/orchestrator/server"
 	"go.opentelemetry.io/otel"
 )
 
@@ -50,6 +51,13 @@ func main() {
 		webserver.Start()
 	}()
 
+	go func() {
+		err := startOrchestrator()
+		if err != nil {
+			log.Fatalf("Erro ao iniciar o Orchestrator: %v", err)
+		}
+	}()
+
 	select {
 	case <-sigCh:
 		log.Println("Shutting down gracefully, CTRL+c pressed...")
@@ -59,4 +67,9 @@ func main() {
 
 	_, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer shutdownCancel()
+}
+
+func startOrchestrator() error {
+	orchestrator.Server()
+	return nil
 }

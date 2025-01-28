@@ -1,8 +1,6 @@
 module github.com.diogocardoso/go/lab-2
 
-go 1.22.0
-
-toolchain go1.22.11
+go 1.22.11
 
 require (
 	github.com/go-chi/chi v1.5.5

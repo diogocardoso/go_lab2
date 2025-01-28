@@ -35,7 +35,6 @@ func (s *WebServer) Start() {
 	s.Router.Use(middleware.Timeout(60 * time.Second))
 
 	for path, handler := range s.Handlers {
-		log.Printf("8080 - Handler add: %s", path)
 		s.Router.Handle(path, handler)
 	}
 
